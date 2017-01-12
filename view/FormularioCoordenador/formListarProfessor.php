@@ -29,11 +29,14 @@
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
         <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
         <style>
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-</style>
+        table, th, td {
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 15px;
+        }
+        </style>
 
     </head>
     <body>
@@ -121,9 +124,9 @@ table, th, td {
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="header">
+                                    <input type="hidden" id="action" name="action" />
 
-                                                     <?
-
+                                                    <?
 
                                                         $host = "localhost";
                                                         $user = "root";
@@ -131,40 +134,44 @@ table, th, td {
                                                         $banco = "BANCORESERVA";
 
                                                         $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
-                                                    ?>
+                                                         $sql="SELECT * FROM PROFESSOR";
+                                                         $result = mysqli_query($conexao, $sql);
 
-                                                        echo '<table width="100%">';
-                                                        echo '<thead><tr>';
-                                                        echo '<th>Matricula</th>';
-                                                        echo '<th>Nome</th>';
-                                                       echo '</tr></thead>';
+                                                         echo 
+                                                         "<table border='1'>
+                                                         <tr>
+                                                            <th>MATRICULA</th>
+                                                            <th>NOME</th>
+                                                            </tr>";
 
-                                                        echo '<tbody>';
+                                                         while($row = mysqli_fetch_array($result))
+                                                         {
+                                                         echo "<tr>";
+                                                         echo "<td>" . $row['codProf'] . "</td>";
+                                                         echo "<td>" . $row['nome'] . "</td>";
+                                                         echo "</tr>";
+                                                         }
+                                                        
+                                                        ?>
 
-                                                        $sql = mysql_query('SELECT * FROM PROFESSOR');
-                                                        while ($row = mysql_fetch_assoc($sql)) {
-                                                            echo '<tr>';
-                                                            echo '<td>' . $row['codProf'] . '</td>';
-                                                            echo '<td>' . $row['nome'] . '</td>';
-                                                          echo '</tr>';
-                                                        }
-
-                                                        echo '</tbody></table>';
-
-
-
+                                                        
                                     </div>
+
                                     <div class="content">
+                                    
 
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+<label>Matricula</label>
+                                                        <input type="text" id="inputMatricula" name="Matricula" class="form-control" required autofocus></br>
+                                                        <button class="btn btn-danger btn-fill pull-right";>Excluir Professor</button>
     </body>
 
 </html>
