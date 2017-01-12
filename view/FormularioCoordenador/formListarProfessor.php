@@ -28,6 +28,12 @@
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
         <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+        <style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+</style>
 
     </head>
     <body>
@@ -54,26 +60,7 @@
                         </li>
 
 
-                        <li>
-                            <a href="formEquipamento.php">
-                                <i class="pe-7s-video"></i>
-                                <p>Cadastro De Equipamentos</p>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="formLaboratorio.php">
-                                <i class="pe-7s-culture"></i>
-                                <p>Cadastro De Laboratórios</p>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="formListarProfessor.php">
-                                
-                                <p>Listar Professor</p>
-                            </a>
-                        </li>
+                    
 
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
@@ -134,7 +121,38 @@
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">SEJA BEM VINDO</h4>
+
+                                                     <?
+
+
+                                                        $host = "localhost";
+                                                        $user = "root";
+                                                        $pass = "";
+                                                        $banco = "BANCORESERVA";
+
+                                                        $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
+                                                    ?>
+
+                                                        echo '<table width="100%">';
+                                                        echo '<thead><tr>';
+                                                        echo '<th>Matricula</th>';
+                                                        echo '<th>Nome</th>';
+                                                       echo '</tr></thead>';
+
+                                                        echo '<tbody>';
+
+                                                        $sql = mysql_query('SELECT * FROM PROFESSOR');
+                                                        while ($row = mysql_fetch_assoc($sql)) {
+                                                            echo '<tr>';
+                                                            echo '<td>' . $row['codProf'] . '</td>';
+                                                            echo '<td>' . $row['nome'] . '</td>';
+                                                          echo '</tr>';
+                                                        }
+
+                                                        echo '</tbody></table>';
+
+
+
                                     </div>
                                     <div class="content">
 

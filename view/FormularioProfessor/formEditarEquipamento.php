@@ -1,5 +1,3 @@
-<?php include 'conn.php'; ?>
-
 <?php
 // A sessão precisa ser iniciada em cada página diferente
 if (!isset($_SESSION))
@@ -23,7 +21,7 @@ if (!isset($_SESSION['Matricula'])) {
         <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <title>Solicitação de Reserva</title>
+        <title>Pagina Inicial Professor</title>
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
@@ -48,7 +46,6 @@ if (!isset($_SESSION['Matricula'])) {
     </head>
     <body>
 
-
         <div class="wrapper">
             <div class="sidebar" data-color="azure" data-image="../imagens/logo.png">
                 <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
@@ -71,20 +68,22 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
 
-                        <li>
+                       <!-- <li>
                             <a href="formReservaEquipamento.php">
                                 <i class="pe-7s-video"></i>
-                                <p>Reservar Equipamentos</p>
+                                <p>RESERVAS EQUIPAMENTOS</p>
                             </a>
                         </li>
 
                         <li>
                             <a href="formLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
-                                <p>Reservar De Laboratórios</p>
+                                <p>RRESERVAS LABORATÓRIO</p>
                             </a>
-                        </li>
 
+                        </li> -->
+
+                       
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
                                 <i class="pe-7s-rocket"></i>
@@ -124,7 +123,7 @@ if (!isset($_SESSION['Matricula'])) {
 
                                 <li>
                                     <a href="formEditarProfessor.php">
-                                        Editar Conta
+                                        Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">
@@ -138,18 +137,19 @@ if (!isset($_SESSION['Matricula'])) {
                     </div>
                 </nav>
 
-                <div class="content">
+                
+                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">SOLICITAÇÃO DE RESERVA</h4>
+                                        <h4 class="title"> Etitar reserva de equipamento</h4>
 
 
                                     </div>
                                     <div class="content">
-                                        <form class="form-signin" id="formulario" action= "../../controller/LaboratorioProfessorController.php" method="post">
+                                        <form class="form-signin" id="formulario" action= "../../controller/EquipamentoProfessorController.php" method="post">
 
                                             <?php
                                             $host = "localhost";
@@ -159,33 +159,33 @@ if (!isset($_SESSION['Matricula'])) {
 
                                             $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
 
-                                            function buscaLaboratorio($conexao) {
+                                            function buscaEquipamento($conexao) {
 
-                                                $query = "select codLab, nome, setor, sala, codCoord from LABORATORIO where codCoord = '" . $_SESSION['Codigo'] . "'";
+                                                $query = "select codEquip, codCoord, nome, marca, tombo, dataAquisicao, modelo, cor from EQUIPAMENTO where codCoord = '" . $_SESSION['Codigo'] . "'";
 
                                                 // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip";
                                                 // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
 
                                                 $resultado = mysqli_query($conexao, $query);
-                                                $laboratorio = array();
+                                                $equipamento = array();
 
                                                 while ($atual = mysqli_fetch_assoc($resultado)) {
                                                     #var_dump($atual);
-                                                    array_push($laboratorio, $atual);
+                                                    array_push($equipamento, $atual);
                                                 }
-                                                return $laboratorio;
+                                                return $equipamento;
                                             }
 
-                                            $laboratorio = buscaLaboratorio($conexao);
+                                            $equipamento = buscaEquipamento($conexao);
                                             ?>
 
-                                            <label><br>Laboratorios</label>
-                                            <select type="text" id="soflow" name="laboratorio" required class="form-control">
-                                                <option value="">Laboratorios</option>
+                                            <label><br>Equipamentos</label>
+                                            <select type="text" id="soflow" name="equipamento" required class="form-control">
+                                                <option value="">      Equipamento</option>
 
-                                                <?php foreach ($laboratorio as $lab) : ?>
-                                                    <option value="<?= $lab['codLab'] ?>"><?= $lab['nome'] ?>__________<?= $lab['setor'] ?>__________<?= $lab['sala'] ?> </option>
-                                                <?php endforeach; ?>			   
+                                                <?php foreach ($equipamento as $equip) : ?>
+                                                    <option value="<?= $equip['codEquip'] ?>"><?= $equip['nome'] ?>__________<?= $equip['marca'] ?>__________<?= $equip['modelo'] ?>__________<?= $equip['cor'] ?>__________<?= $equip['dataAquisicao'] ?>  </option>
+                                                <?php endforeach; ?>               
                                             </select>
 
                                             <label><br>Data de Reserva</label>
@@ -199,7 +199,7 @@ if (!isset($_SESSION['Matricula'])) {
                                                 <option value="3">14:00 às 16:00</option>
                                                 <option value="4">16:00 às 18:00</option>
                                                 <option value="5">18:00 às 20:00</option>
-                                                <option value="6">20:00 às 22:00</option> 		   
+                                                <option value="6">20:00 às 22:00</option>          
                                             </select>
 
                                             <input type="hidden" name="professor" value="<?php echo $_SESSION['Matricula']; ?>" >
@@ -218,15 +218,10 @@ if (!isset($_SESSION['Matricula'])) {
 
                     </div>
                 </div>
-
             </div>
-
         </div>
 
     </body>
 
 </html>
-
-
-
 

@@ -123,8 +123,8 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
-                                    <a href="">
-                                        Conta
+                                    <a href="formEditarProfessor.php">
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">

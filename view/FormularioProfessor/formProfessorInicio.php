@@ -82,6 +82,12 @@ if (!isset($_SESSION['Matricula'])) {
                             </a>
 
                         </li>
+                        <li>
+                           <a href="formProfessorMinhasReservas.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Minhas Reservas</p>
+                            </a>
+                        </li>
 
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">

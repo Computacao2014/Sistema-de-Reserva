@@ -1,3 +1,17 @@
+<?php
+// A sessão precisa ser iniciada em cada página diferente
+if (!isset($_SESSION))
+    session_start();
+
+// Verifica se não há a variável da sessão que identifica o usuário
+if (!isset($_SESSION['Matricula'])) {
+    // Destrói a sessão por segurança
+    session_destroy();
+    // Redireciona o visitante de volta pro login
+    echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
+    exit;
+}
+?>
 <!doctype html>
 
 
@@ -7,7 +21,7 @@
         <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <title>Pagina Inicial Coordenador</title>
+        <title>Pagina Inicial Professor</title>
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
@@ -47,34 +61,29 @@
 
                     <ul class="nav">
                         <li>
-                            <a href="formCoordenador.php">
+                            <a href="formProfessorInicio.php">
                                 <i class="pe-7s-graph"></i>
                                 <p>Inicio</p>
                             </a>
                         </li>
 
 
-                        <li>
-                            <a href="formEquipamento.php">
+                       <!-- <li>
+                            <a href="formReservaEquipamento.php">
                                 <i class="pe-7s-video"></i>
-                                <p>Cadastro De Equipamentos</p>
+                                <p>RESERVAS EQUIPAMENTOS</p>
                             </a>
                         </li>
 
                         <li>
                             <a href="formLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
-                                <p>Cadastro De Laboratórios</p>
+                                <p>RRESERVAS LABORATÓRIO</p>
                             </a>
-                        </li>
 
-                        <li>
-                            <a href="formListarProfessor.php">
-                                
-                                <p>Listar Professor</p>
-                            </a>
-                        </li>
+                        </li> -->
 
+                       
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
                                 <i class="pe-7s-rocket"></i>
@@ -113,7 +122,7 @@
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
-                                    <a href="">
+                                    <a href="formEditarProfessor.php">
                                         Conta
                                     </a>
                                 </li>
@@ -134,9 +143,26 @@
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">SEJA BEM VINDO</h4>
+                                        <h4 class="title"> <?php echo " Olá " . $_SESSION['Nome'] . ", aqui você pode acessar as suas reservas"; ?>  </h4> 
+	                                    
+	                                    <li>
+	                                     	<a href="formProfessorMinhasReservasEquipamento.php">
+				                               <h5>Reservas de Equipamentos</h3> 
+				                           </a>
+				                        </li> 
+
+				                        <li>
+
+				                             <a href="formProfessorMinhasReservasLaboratorio.php">
+				                               <h5>Reservas de Laboratórios</h3> 
+				                            </a>
+								        </li> 
+
+
+
                                     </div>
                                     <div class="content">
+
 
                                     </div>
                                 </div>
@@ -150,5 +176,4 @@
     </body>
 
 </html>
-
 
