@@ -1,3 +1,5 @@
+<?php include 'conn.php'; ?>
+
 <?php
 // A sessão precisa ser iniciada em cada página diferente
 if (!isset($_SESSION))
@@ -21,7 +23,7 @@ if (!isset($_SESSION['Matricula'])) {
         <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-        <title>Pagina Inicial Professor</title>
+        <title>Solicitação de Reserva</title>
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
         <meta name="viewport" content="width=device-width" />
@@ -46,6 +48,7 @@ if (!isset($_SESSION['Matricula'])) {
     </head>
     <body>
 
+
         <div class="wrapper">
             <div class="sidebar" data-color="azure" data-image="../imagens/logo.png">
                 <!--   you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple" -->
@@ -68,22 +71,26 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
 
-                       <!-- <li>
+                        <li>
                             <a href="formReservaEquipamento.php">
                                 <i class="pe-7s-video"></i>
-                                <p>RESERVAS EQUIPAMENTOS</p>
+                                <p>Reservar Equipamentos</p>
                             </a>
                         </li>
 
                         <li>
-                            <a href="formLaboratorio.php">
+                            <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
-                                <p>RRESERVAS LABORATÓRIO</p>
+                                <p>Reservar Laboratório</p>
                             </a>
+                        </li>
+                        <li>
+                            <a href="table.html">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
+                            </a>
+                        </li>
 
-                        </li> -->
-
-                       
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
                                 <i class="pe-7s-rocket"></i>
@@ -120,10 +127,16 @@ if (!isset($_SESSION['Matricula'])) {
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
+                                <li>
+
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
 
                                 <li>
                                     <a href="formEditarProfessor.php">
-                                        Conta
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">
@@ -137,43 +150,58 @@ if (!isset($_SESSION['Matricula'])) {
                     </div>
                 </nav>
 
+
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title"> <?php echo " Olá " . $_SESSION['Nome'] . ", aqui você pode editar ou ecluir reservas de Equipamentos"; ?>  </h4> 
-	                                    
-	                                    <li>
-	                                     	<a href="formEditarEquipamento.php">
-				                               <h5>Editar Reserva de Equipamentos</h3> 
-				                           </a>
-				                        </li> 
-
-				                        <li>
-
-				                             <a href="formExcluirEquipamento.php">
-				                               <h5>Excluir Reservar de Equipamentos</h3> 
-				                            </a>
-								        </li> 
-
+                                        <h4 class="title">SOLICITAÇÃO DE RESERVA - LABORATÓRIO</h4>
 
 
                                     </div>
                                     <div class="content">
+                                        <form class="form-signin" id="formulario" action= "formLaboratorioDisponivel.php" method="post">
 
+                                            <label><br>Data de Reserva</label>
+                                            <input type="date" id="inputDataAquisio" name="data" class="form-control" placeholder="dd/mm/yyyy" required></br>
 
+                                            <label>Hora da Reserva</label>
+                                            <select id="CbHora" type="text" id="soflow" name="hora" required class="form-control">
+                                                <option value="">Selecione o Horario</option>
+                                                <option value="1">08:00 às 10:00</option>
+                                                <option value="2">10:00 às 12:00</option>
+                                                <option value="3">14:00 às 16:00</option>
+                                                <option value="4">16:00 às 18:00</option>
+                                                <option value="5">18:00 às 20:00</option>
+                                                <option value="6">20:00 às 22:00</option> 		   
+                                            </select>
+
+                                            <input type="hidden" name="professor" value="<?php echo $_SESSION['Matricula']; ?>" >
+                                            <input type="hidden" name="coordenacao" value="<?php echo $_SESSION['Codigo']; ?>" >
+                                            <input type="hidden" name="nome" value="<?php echo $_SESSION['Nome']; ?>" >                                                                                    
+                                            <input type="hidden" name="status" value="1" >
+                                            <label><br><br><br><br></label>
+                                            <button type="submit" class="" >Pesquisar</button>
+                                        </form><!-- /form -->
                                     </div>
+
                                 </div>
+
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </div>
+
         </div>
 
     </body>
 
 </html>
+
+
 

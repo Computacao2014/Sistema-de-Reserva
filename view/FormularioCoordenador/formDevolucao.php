@@ -2,6 +2,8 @@
 
 
 <html lang="pt-BR">
+
+
     <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/png" href="../assets/img/favicon.ico">
@@ -28,15 +30,11 @@
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
         <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
-        <style>
-        table, th, td {
-            border: 2px solid black;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 15px;
-        }
-        </style>
+
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
+
+       
+
 
     </head>
     <body>
@@ -61,9 +59,7 @@
                                 <p>Inicio</p>
                             </a>
                         </li>
-
-
-                    
+                   
 
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
@@ -124,54 +120,88 @@
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="header">
-                                    <input type="hidden" id="action" name="action" />
-
-                                                    <?
-
-                                                        $host = "localhost";
-                                                        $user = "root";
-                                                        $pass = "";
-                                                        $banco = "BANCORESERVA";
-
-                                                        $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
-                                                         $sql="SELECT * FROM PROFESSOR";
-                                                         $result = mysqli_query($conexao, $sql);
-
-                                                         echo 
-                                                         "<table border='1'>
-                                                         <tr>
-                                                            <th>MATRICULA</th>
-                                                            <th>NOME</th>
-                                                            </tr>";
-
-                                                         while($row = mysqli_fetch_array($result))
-                                                         {
-                                                         echo "<tr>";
-                                                         echo "<td>" . $row['codProf'] . "</td>";
-                                                         echo "<td>" . $row['nome'] . "</td>";
-                                                         echo "</tr>";
-                                                         }
-                                                        
-                                                        ?>
-
-                                                        
+                                        <h4 class="title">Devolução</h4>
                                     </div>
 
-                                    <div class="content">
+                                        <div class="content">
+                                        <form >
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                    
+                                                        <label>Matrícula</label>
+                                                        <input type="text" id="matricula" name="nome" class="form-control" required autofocus></br>
+
+                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-info btn-fill pull-right" type="submit" value="submit" onclick="return dhk()" >Procurar</button>
+
+                                            <div class="clearfix"></div>
+                                        </form>
+
+
+                                        <p id="msg"></p>
+
+
+                                               <script>
+                                                    function dhk() {
+
+                                                        var matricula=document.getElementById('matricula').value;
+                                                        var dataString='matricula='+ matricula;
+
+                                                        $.ajax({
+                                                            type:"post",
+                                                            url: "teste.php",
+                                                            data:dataString,
+                                                            cache: false,
+                                                            success: function(html){
+
+
+                                                                var tabela="";
+                                                                $('#msg').html(html);
+                                                            }
+
+                                                        });
+
+                                                        return false;
+                                                    }
+                                                </script>
+                                                <br>
+                                                <br>
+
+                                          <!--  <form method="post" action="devolucaoLab.php">
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <div class="form-group">
+                                                    
+                                                        <label>Código</label>
+                                                        <input type="text" id="codigo" name="codigo" class="form-control" required autofocus></br>
+
+                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-info btn-fill pull-right" type="submit" value="submit"  >Devolver</button>
+
+                                            <div class="clearfix"></div>
+                                        </form>
+                                     -->
+
+                                    </div>
                                     
-
-                                    </div>
+                                        
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-<label>Matricula</label>
-                                                        <input type="text" id="inputMatricula" name="Matricula" class="form-control" required autofocus></br>
-                                                        <button class="btn btn-danger btn-fill pull-right";>Excluir Professor</button>
+
     </body>
 
 </html>

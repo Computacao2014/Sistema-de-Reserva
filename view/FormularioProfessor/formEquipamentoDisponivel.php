@@ -1,3 +1,4 @@
+<!doctype html>
 <?php include 'conn.php'; ?>
 
 <?php
@@ -14,8 +15,6 @@ if (!isset($_SESSION['Matricula'])) {
     exit;
 }
 ?>
-<!doctype html>
-
 
 <html lang="pt-BR">
     <head>
@@ -44,6 +43,10 @@ if (!isset($_SESSION['Matricula'])) {
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
         <link href="../assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     </head>
     <body>
@@ -56,10 +59,47 @@ if (!isset($_SESSION['Matricula'])) {
 
                 <div class="sidebar-wrapper">
 
-
+                    <div class="logo">
+                        <a href="http://www.uespi.br/site" target="_blank" class="simple-text">
+                            Site Da Instituição
+                        </a>
+                    </div>
 
                     <ul class="nav">
+                        <li>
+                            <a href="formProfessorInicio.php">
+                                <i class="pe-7s-graph"></i>
+                                <p>Inicio</p>
+                            </a>
+                        </li>
 
+
+                        <li>
+                            <a href="formReservaEquipamento.php">
+                                <i class="pe-7s-video"></i>
+                                <p>Reservar Equipamentos</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaLaboratorio.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Reservar Laboratório</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="table.html">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
+                            </a>
+                        </li>
+
+                        <li class="active-pro">
+                            <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
+                                <i class="pe-7s-rocket"></i>
+                                <p>Site Da Instituição</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -90,6 +130,24 @@ if (!isset($_SESSION['Matricula'])) {
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
+                                <li>
+
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="formEditarProfessor.php">
+                                        Conta
+                                    </a>
+                                </li>
+                                <li class="dropdown">
+
+                                    <a href="../../pagina1.php">
+                                        Sair
+                                    </a>
+                                </li>
 
                             </ul>
                         </div>
@@ -108,23 +166,9 @@ if (!isset($_SESSION['Matricula'])) {
                                     </div>
                                     <div class="content">
                                         <form class="form-signin" id="formulario" action= "../../controller/EquipamentoProfessorController.php" method="post">
-
-
                                             <?php
-                                            $codProf = $_POST['professor'];
-                                            $dataEmp = $_POST['data'];
-                                            $horaEmp = $_POST['hora'];
-                                            $status = $_POST['status'];
-                                            $coordenacao = $_POST['coordenacao'];
-                                            $nome = $_POST['nome'];
-
-                                            echo "$dataEmp <br></br>";
-
-                                            echo "$codProf <br></br>";
-
-                                            echo "$coordenacao <br></br>";
-
-                                            echo "$nome <br></br>";
+                                            $DataEmp = $_POST['data'];
+                                            $HoraEmp = $_POST['hora'];
 
                                             $host = "localhost";
                                             $user = "root";
@@ -132,19 +176,37 @@ if (!isset($_SESSION['Matricula'])) {
                                             $banco = "BANCORESERVA";
 
                                             $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
+					                        function ultimoCodigo($conexao){
+                                              $ultimo = "select codEquip from EQUIPAMENTO where codEquip = (SELECT MAX(codEquip) FROM EQUIPAMENTO)";
+                                                $resultadoCod = mysqli_query($conexao, $ultimo);
+						
+
+                                                $ultimoCod = array();
+
+                                                while ($atual = mysqli_fetch_assoc($resultadoCod)) {
+                                                    #var_dump($atual);
+                                                    array_push($ultimoCod, $atual);
+                                                }
+                                                return $ultimoCod;
+                                            }
+                       
+                                            $teste = ultimoCodigo($conexao);
+					                        $cont1 = count($teste);
+                                             for ($i = 0; $i < $cont1; $i++) {
+                                                
+                                               //echo "olá "+$teste[$i]['codEquip'];
+                                            }
+                                           
+                                            
 
                                             function buscaEquipamento($conexao) {
 
-                                               $query = "select codCoord, nome, marca, tombo, dataAquisicao, modelo, cor from EQUIPAMENTO where codCoord = '" . $_POST['coordenacao'] . "'";
-
-                                               // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip";
-
-                                               // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
-                                                
-                                                $resultado = mysqli_query($conexao, $query);
+                                                $query1 = "select codEquip from EQUIP_PROF where dataEmp = '" . $_POST['data'] . "' AND horaEmp = '" . $_POST['hora'] . "' ";
+                                                $resultado1 = mysqli_query($conexao, $query1);
+						
                                                 $equipamento = array();
 
-                                                while ($atual = mysqli_fetch_assoc($resultado)) {
+                                                while ($atual = mysqli_fetch_assoc($resultado1)) {
                                                     #var_dump($atual);
                                                     array_push($equipamento, $atual);
                                                 }
@@ -152,34 +214,98 @@ if (!isset($_SESSION['Matricula'])) {
                                             }
 
                                             $equipamento = buscaEquipamento($conexao);
+                                            $final = array();
+
+                                            if (count($equipamento) > 0) {
+                                                for ($i = 0; $i < count($equipamento); $i++) {
+
+                                                    array_push($final, $equipamento[$i]['codEquip']);
+                                                }
+                                            }
+
+                                            error_reporting(E_ERROR | E_PARSE);
+                                            $cont = count($equipamento);
+                                            for ($i = 0; $i < $cont; $i++) {
+                                                if ($i < $cont - 1) {
+
+                                                    $camposQuery .= $equipamento[$i]['codEquip'] . " AND c.codEquip != ";
+                                                } else {
+
+                                                    $camposQuery .= $equipamento[$i]['codEquip'];
+                                                }
+                                            }
                                             ?>
 
-                                            <label><br>Equipamentos Disponíveis</label>
-                                            <select type="text" id="soflow" name="equipamento" required class="form-control">
-                                                <option value="">      Equipamento</option>
 
-                                                <?php foreach ($equipamento as $equip) : ?>
-                                                    <option value="<?= $equip['codEquip'] ?>"><?= $equip['nome'] ?>__________<?= $equip['marca'] ?>__________<?= $equip['modelo'] ?>__________<?= $equip['cor'] ?>__________<?= $equip['dataAquisicao'] ?>  </option>
-                                                <?php endforeach; ?>			   
-                                            </select>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Nome</th>
+                                                        <th>Modelo</th>
+                                                        <th>Marca</th>
+                                                        <th>Data de Aquisiçao</th>
 
-                                            <button type="submit" class="" >Reservar</button>
-                                        </form><!-- /form -->
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <?php
+                                                        error_reporting(E_ERROR | E_PARSE);
+                                                        $coordenacaoP = $_SESSION['Codigo'];
+                                                        if ($final != NULL) {
+
+                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE c.codEquip != $camposQuery AND s.codCoord = $coordenacaoP)";
+                                                        } else {
+                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE s.codCoord = $coordenacaoP)";
+                                                        }
+
+                                                        $resultado = mysqli_query($conexao, $query);
+
+
+                                                        while ($row = mysqli_fetch_assoc($resultado)) {
+                                                            error_reporting(E_ERROR | E_PARSE);
+
+
+                                                            echo '<td>' . $row['codEquip'] . '</td>';
+                                                            echo '<td>' . $row['nome'] . '</td>';
+                                                            echo '<td>' . $row['marca'] . '</td>';
+                                                            echo '<td>' . $row['modelo'] . '</td>';
+                                                            echo '<td>' . $row['dataAquisicao'] . '</td>';
+                                                            echo '</tr>';
+                                                            //echo '</tbody></table>';
+                                                        }
+                                                        ?>
+                                                </tbody>
+                                            </table>
                                     </div>
-
                                 </div>
 
+                                <input type="hidden" name="data" value="<?php echo $_POST['data']; ?>">
+                                <input type="hidden" name="hora" value="<?php echo $_POST['hora']; ?>">
+                                <input type="hidden" name="status" value="1" >
+                                <input type="hidden" name="professor" value="<?php echo $_SESSION['Matricula']; ?>" >
+                                <input type="number" id="inputNome" name="CodEquipamento" value="CodEquipamento"class="form-control" placeholder="Informe o Código do Equipamento" required  autofocus>
+                                <br>
+                                <button type="submit" class="btn btn-lg btn-primary" >Reservar</button>
+                                </form><!-- /form -->
                             </div>
+
                         </div>
 
                     </div>
                 </div>
 
             </div>
-
         </div>
 
-    </body>
+    </div>
+
+</div>
+
+</body>
 
 </html>
 

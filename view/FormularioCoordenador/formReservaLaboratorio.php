@@ -64,7 +64,7 @@ if (!isset($_SESSION['Matricula'])) {
 
                     <ul class="nav">
                         <li>
-                            <a href="formProfessorInicio.php">
+                            <a href="formCoordenador.php">
                                 <i class="pe-7s-graph"></i>
                                 <p>Inicio</p>
                             </a>
@@ -72,23 +72,36 @@ if (!isset($_SESSION['Matricula'])) {
 
 
                         <li>
-                            <a href="formReservaEquipamento.php">
+                            <a href="formEquipamento.php">
                                 <i class="pe-7s-video"></i>
-                                <p>Reservar Equipamentos</p>
+                                <p>Cadastro De Equipamentos</p>
                             </a>
                         </li>
 
                         <li>
                             <a href="formLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
-                                <p>Reservar De Laboratórios</p>
+                                <p>Cadastro De Laboratórios</p>
+                            </a>
+                        </li>
+                            <li>
+                            <a href="formExcluirProfessor.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Excluir Professor</p>
                             </a>
                         </li>
 
-                        <li class="active-pro">
-                            <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
-                                <i class="pe-7s-rocket"></i>
-                                <p>Site Da Instituição</p>
+                        <li>
+                            <a href="formReservaEquipamento.php">
+                                <i class="pe-7s-video"></i>
+                                <p>Reservar Equipamento</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaLaboratorio.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Reservar Laboratórios</p>
                             </a>
                         </li>
                     </ul>
@@ -121,6 +134,12 @@ if (!isset($_SESSION['Matricula'])) {
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
+                                <li>
+
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
 
                                 <li>
                                     <a href="formEditarProfessor.php">
@@ -138,55 +157,19 @@ if (!isset($_SESSION['Matricula'])) {
                     </div>
                 </nav>
 
+
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">SOLICITAÇÃO DE RESERVA</h4>
+                                        <h4 class="title">SOLICITAÇÃO DE RESERVA - LABORATÓRIO</h4>
 
 
                                     </div>
                                     <div class="content">
-                                        <form class="form-signin" id="formulario" action= "../../controller/LaboratorioProfessorController.php" method="post">
-
-                                            <?php
-                                            $host = "localhost";
-                                            $user = "root";
-                                            $pass = "";
-                                            $banco = "BANCORESERVA";
-
-                                            $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
-
-                                            function buscaLaboratorio($conexao) {
-
-                                                $query = "select codLab, nome, setor, sala, codCoord from LABORATORIO where codCoord = '" . $_SESSION['Codigo'] . "'";
-
-                                                // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip";
-                                                // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
-
-                                                $resultado = mysqli_query($conexao, $query);
-                                                $laboratorio = array();
-
-                                                while ($atual = mysqli_fetch_assoc($resultado)) {
-                                                    #var_dump($atual);
-                                                    array_push($laboratorio, $atual);
-                                                }
-                                                return $laboratorio;
-                                            }
-
-                                            $laboratorio = buscaLaboratorio($conexao);
-                                            ?>
-
-                                            <label><br>Laboratorios</label>
-                                            <select type="text" id="soflow" name="laboratorio" required class="form-control">
-                                                <option value="">Laboratorios</option>
-
-                                                <?php foreach ($laboratorio as $lab) : ?>
-                                                    <option value="<?= $lab['codLab'] ?>"><?= $lab['nome'] ?>__________<?= $lab['setor'] ?>__________<?= $lab['sala'] ?> </option>
-                                                <?php endforeach; ?>			   
-                                            </select>
+                                        <form class="form-signin" id="formulario" action= "formLaboratorioDisponivel.php" method="post">
 
                                             <label><br>Data de Reserva</label>
                                             <input type="date" id="inputDataAquisio" name="data" class="form-control" placeholder="dd/mm/yyyy" required></br>
@@ -207,7 +190,7 @@ if (!isset($_SESSION['Matricula'])) {
                                             <input type="hidden" name="nome" value="<?php echo $_SESSION['Nome']; ?>" >                                                                                    
                                             <input type="hidden" name="status" value="1" >
                                             <label><br><br><br><br></label>
-                                            <button type="submit" class="" >Reservar</button>
+                                            <button type="submit" class="" >Pesquisar</button>
                                         </form><!-- /form -->
                                     </div>
 
@@ -226,7 +209,6 @@ if (!isset($_SESSION['Matricula'])) {
     </body>
 
 </html>
-
 
 
 

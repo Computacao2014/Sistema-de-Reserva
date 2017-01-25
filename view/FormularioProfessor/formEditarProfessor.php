@@ -12,7 +12,6 @@ if (!isset($_SESSION['Matricula'])) {
     exit;
 }
 ?>
-
 <?php include 'conn.php'; ?>
 <!doctype html>
 
@@ -50,44 +49,44 @@ if (!isset($_SESSION['Matricula'])) {
                 <p id="profile-name" class="profile-name-card"></p>
                 <form class="form-signin" id="formulario" action= "../../controller/AlterarProfessorController.php" method="post">
 
-                    <input type="hidden" id="action" name="editar" />  
-                     <?php
-                            $host = "localhost";
-                            $user = "root";
-                            $pass = "";
-                            $banco = "BANCORESERVA";
+                    <input type="hidden" id="action" name="editar" />    
 
-                            $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
+                    <?php
+                    $host = "localhost";
+                    $user = "root";
+                    $pass = "";
+                    $banco = "BANCORESERVA";
 
-                          
+                    $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
 
-                             $query = "select codProf, nome, email, endereco, telefone from PROFESSOR where codProf = '" .$_SESSION['Matricula']. "'";
 
-                                
-                                $resultado = mysqli_query($conexao, $query);
-                                $professor = array();
 
-                                while ($atual = mysqli_fetch_assoc($resultado)) {
-                                    #var_dump($atual);
-                                    array_push($professor, $atual);
-                                }
-                                foreach ($professor as $prof) :
-                                    $nomeProfessor = $prof['nome'];
-                                    $enderecoProfessor = $prof['endereco'];
-                                    $telefoneProfessor = $prof['telefone'];
-                                    $emailProfessor = $prof['email'];
-                                endforeach;
-                       
+                    $query = "select codProf, nome, email, endereco, telefone, senha from PROFESSOR where codProf = '" . $_SESSION['Matricula'] . "'";
+
+
+                    $resultado = mysqli_query($conexao, $query);
+                    $professor = array();
+
+                    while ($atual = mysqli_fetch_assoc($resultado)) {
+                        #var_dump($atual);
+                        array_push($professor, $atual);
+                    }
+                    foreach ($professor as $prof) :
+                        $nomeProfessor = $prof['nome'];
+                        $enderecoProfessor = $prof['endereco'];
+                        $telefoneProfessor = $prof['telefone'];
+                        $emailProfessor = $prof['email'];
+                        $senhaProfessor = $prof['senha'];
+
+                    endforeach;
                     ?>
 
-
-
-                    <input type="text" id="inputNom" name="nome" value="<?php echo $nomeProfessor ?>" class="form-control" placeholder="Nome"  required>
+                    <input type="text" id="inputNome" name="nome" value="<?php echo $nomeProfessor ?>" class="form-contro" placeholder="Nome" required>
                     <input type="text" id="inputEndereco" name="endereco" value="<?php echo $enderecoProfessor ?>" class="form-control" placeholder="Endereço" required>
-                    <input type="text" id="inputTell" name="telefone" value="<?php echo $telefoneProfessor ?>" class="form-control" placeholder="Telefone"required >
+                    <input type="text" id="inputTelefone" name="telefone" value="<?php echo $telefoneProfessor ?>" class="form-control" placeholder="Telefone"required >
                     <input type="email" id="inputEmail" name="email" value="<?php echo $emailProfessor ?>" class="form-control" placeholder="Email"  required>
-                    <input type="password" id="inputSenha" name="senha" class="form-control" placeholder="Senha" required>
-                    <input type="password" id="confirmaSenha" name="confirmaSenha" class="form-control" placeholder="Confirme a Senha" required>
+                    <input type="password" id="inputSenha" name="senha" value="<?php echo $senhaProfessor ?>"class="form-control" placeholder="Senha" required>
+                    <input type="password" id="inputSenhaConfirma" name="confirmaSenha" value="<?php echo $senhaProfessor ?>"class="form-control" placeholder="Confirme a Senha" required>
 
 
 
@@ -163,9 +162,11 @@ if (!isset($_SESSION['Matricula'])) {
 
                 </form><!-- /form -->
 
+
                 <a href='../../model/Logout.php' class="forgot-password">
                     Sair ?
                 </a>
+
 
             </div><!-- /card-container -->
         </div>

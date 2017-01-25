@@ -76,16 +76,17 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
                         <li>
-                            <a href="formLaboratorio.php">
+                            <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratório</p>
                             </a>
 
                         </li>
+
                         <li>
-                           <a href="formProfessorMinhasReservas.php">
-                                <i class="pe-7s-culture"></i>
-                                <p>Minhas Reservas</p>
+                            <a href="table.html">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
                             </a>
                         </li>
 
@@ -127,10 +128,21 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
+
+                                    <a href="">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+
+                                <li>
+
                                     <a href="formEditarProfessor.php">
                                         Editar Conta
                                     </a>
                                 </li>
+
+
                                 <li class="dropdown">
 
                                     <a href="../../pagina1.php">
@@ -144,23 +156,16 @@ if (!isset($_SESSION['Matricula'])) {
 
                 <div class="content">
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="card">
-                                    <div class="header">
-                                        <h4 class="title">SEJA BEM VINDO <?php echo " , " . $_SESSION['Nome']; ?>  </h4>
-                                    </div>
-                                    <div class="content">
+                    
+
+                           
 
 
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
     </body>
 

@@ -79,9 +79,15 @@ if (!isset($_SESSION['Matricula'])) {
                         </li>
 
                         <li>
-                            <a href="formLaboratorio.php">
+                            <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratório</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="table.html">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
                             </a>
                         </li>
 
@@ -121,6 +127,12 @@ if (!isset($_SESSION['Matricula'])) {
                             </ul>
 
                             <ul class="nav navbar-nav navbar-right">
+                                <li>
+
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
 
                                 <li>
                                     <a href="formEditarProfessor.php">
@@ -138,55 +150,19 @@ if (!isset($_SESSION['Matricula'])) {
                     </div>
                 </nav>
 
+
                 <div class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">SOLICITAÇÃO DE RESERVA</h4>
+                                        <h4 class="title">SOLICITAÇÃO DE RESERVA - EQUIPAMENTO</h4>
 
 
                                     </div>
                                     <div class="content">
-                                        <form class="form-signin" id="formulario" action= "../../controller/EquipamentoProfessorController.php" method="post">
-
-                                            <?php
-                                            $host = "localhost";
-                                            $user = "root";
-                                            $pass = "";
-                                            $banco = "BANCORESERVA";
-
-                                            $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
-
-                                            function buscaEquipamento($conexao) {
-
-                                                $query = "select codEquip, codCoord, nome, marca, tombo, dataAquisicao, modelo, cor from EQUIPAMENTO where codCoord = '" . $_SESSION['Codigo'] . "'";
-
-                                                // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip";
-                                                // $query = "SELECT * FROM EQUIPAMENTO INNER JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip = EQUIP_PROF.codEquip WHERE EQUIP_PROF.dataEmp <> '".$_POST['data']."' AND EQUIP_PROF.horaEmp <> '".$_POST['hora']."' AND EQUIPAMENTO.codCoord = '".$_POST['coordenacao']."'";
-
-                                                $resultado = mysqli_query($conexao, $query);
-                                                $equipamento = array();
-
-                                                while ($atual = mysqli_fetch_assoc($resultado)) {
-                                                    #var_dump($atual);
-                                                    array_push($equipamento, $atual);
-                                                }
-                                                return $equipamento;
-                                            }
-
-                                            $equipamento = buscaEquipamento($conexao);
-                                            ?>
-
-                                            <label><br>Equipamentos</label>
-                                            <select type="text" id="soflow" name="equipamento" required class="form-control">
-                                                <option value="">      Equipamento</option>
-
-                                                <?php foreach ($equipamento as $equip) : ?>
-                                                    <option value="<?= $equip['codEquip'] ?>"><?= $equip['nome'] ?>__________<?= $equip['marca'] ?>__________<?= $equip['modelo'] ?>__________<?= $equip['cor'] ?>__________<?= $equip['dataAquisicao'] ?>  </option>
-                                                <?php endforeach; ?>			   
-                                            </select>
+                                        <form class="form-signin" id="formulario" action= "formEquipamentoDisponivel.php" method="post">
 
                                             <label><br>Data de Reserva</label>
                                             <input type="date" id="inputDataAquisio" name="data" class="form-control" placeholder="dd/mm/yyyy" required></br>
@@ -207,7 +183,7 @@ if (!isset($_SESSION['Matricula'])) {
                                             <input type="hidden" name="nome" value="<?php echo $_SESSION['Nome']; ?>" >                                                                                    
                                             <input type="hidden" name="status" value="1" >
                                             <label><br><br><br><br></label>
-                                            <button type="submit" class="" >Reservar</button>
+                                            <button type="submit" class="" >Pesquisar</button>
                                         </form><!-- /form -->
                                     </div>
 

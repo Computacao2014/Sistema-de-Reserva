@@ -1,3 +1,17 @@
+<?php
+// A sessão precisa ser iniciada em cada página diferente
+if (!isset($_SESSION))
+    session_start();
+
+// Verifica se não há a variável da sessão que identifica o usuário
+if (!isset($_SESSION['Matricula'])) {
+    // Destrói a sessão por segurança
+    session_destroy();
+    // Redireciona o visitante de volta pro login
+    echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
+    exit;
+}
+?>
 <!doctype html>
 <html lang="pt-BR">
     <head>
@@ -44,7 +58,7 @@
                     </div>
 
                     <ul class="nav">
-                        <li>
+<li>
                             <a href="formCoordenador.php">
                                 <i class="pe-7s-graph"></i>
                                 <p>Inicio</p>
@@ -63,6 +77,26 @@
                             <a href="formLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Cadastro De Laboratórios</p>
+                            </a>
+                        </li>
+                            <li>
+                            <a href="formExcluirProfessor.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Excluir Professor</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaEquipamento.php">
+                                <i class="pe-7s-video"></i>
+                                <p>Reservar Equipamento</p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="formReservaLaboratorio.php">
+                                <i class="pe-7s-culture"></i>
+                                <p>Reservar Laboratórios</p>
                             </a>
                         </li>
 
@@ -151,45 +185,7 @@
                                                         <label>Cor</label>
                                                         <input type="text" id="inputCor" name="cor" class="form-control" required><br>
 
-                                                        <?
-
-
-                                                        $host = "localhost";
-                                                        $user = "root";
-                                                        $pass = "";
-                                                        $banco = "BANCORESERVA";
-
-                                                        $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
-
-
-                                                        function buscaCoordenacao($conexao){
-
-
-                                                        $query = "select * from COORDENACAO";
-                                                        $resultado = mysqli_query($conexao, $query);
-                                                        $coordenacao = array();
-
-
-                                                        while ($atual = mysqli_fetch_assoc($resultado)) {
-                                                        #var_dump($atual);
-                                                        array_push($coordenacao,$atual);
-                                                        }
-
-                                                        return $coordenacao;
-                                                        }
-
-                                                        $coordenacao = buscaCoordenacao($conexao);
-
-                                                        ?>
-
-
-                                                        <select type="text" id="soflow" name="coordenacao" required class="form-control">
-                                                            <option value="">      Coordenação</option>
-
-                                                            <?php foreach ($coordenacao as $coord) : ?>
-                                                                <option value="<?= $coord['codCoord'] ?>"><?= $coord['nome'] ?></option>
-                                                            <?php endforeach; ?>			   
-                                                        </select>
+                                                         <input type="hidden" name="coordenacao" value="<?php echo $_SESSION['Codigo']; ?>" >
 
                                                     </div>
                                                 </div>
