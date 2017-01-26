@@ -179,7 +179,7 @@ if (!isset($_SESSION['Matricula'])) {
 
                                     </div>
                                     <div class="content">
-                                        <form class="form-signin" id="formulario" action= "../../controller/EquipamentoProfessorController.php" method="post">
+                                        <form class="form-signin" id="formulario" action= "../../controller/EquipamentoCoordenadorController.php" method="post">
                                             <?php
                                             $DataEmp = $_POST['data'];
                                             $HoraEmp = $_POST['hora'];

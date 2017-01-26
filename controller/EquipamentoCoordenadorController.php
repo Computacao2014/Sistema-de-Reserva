@@ -31,7 +31,7 @@ class EquipamentoProfessorController {
      
         
 
-        header("Location: ../view/FormularioProfessor/formEquipamentoDisponivel.php", TRUE, 307);
+        header("Location: ../view/FormularioCoordenador/formEquipamentoDisponivel.php", TRUE, 307);
       
 
         //echo "<script>alert('Equipamento Reservado Com Sucesso!');document.location='../view/FormularioCoordenador/formReservaEquipamento.php'</script>";

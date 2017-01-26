@@ -81,13 +81,13 @@ if (!isset($_SESSION['Matricula'])) {
                                 <p>Cadastro De Laboratórios</p>
                             </a>
                         </li>
-                           <li>
+                        <li>
                             <a href="formDevolucao.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Devolução</p>
                             </a>
                         </li>
-                            <li>
+                        <li>
                             <a href="formExcluirProfessor.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Excluir Professor</p>
@@ -105,6 +105,12 @@ if (!isset($_SESSION['Matricula'])) {
                             <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratórios</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formHistoricoEquipamento.php">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
                             </a>
                         </li>
 
@@ -146,8 +152,14 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
-                                    <a href="">
-                                        Conta
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="formEditarProfessor.php">
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">

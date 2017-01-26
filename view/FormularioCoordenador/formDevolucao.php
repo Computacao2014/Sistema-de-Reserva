@@ -1,3 +1,17 @@
+<?php
+// A sessão precisa ser iniciada em cada página diferente
+if (!isset($_SESSION))
+    session_start();
+
+// Verifica se não há a variável da sessão que identifica o usuário
+if (!isset($_SESSION['Matricula'])) {
+    // Destrói a sessão por segurança
+    session_destroy();
+    // Redireciona o visitante de volta pro login
+    echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
+    exit;
+}
+?>
 <!doctype html>
 
 
@@ -33,7 +47,7 @@
 
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script> 
 
-       
+
 
 
     </head>
@@ -59,7 +73,7 @@
                                 <p>Inicio</p>
                             </a>
                         </li>
-                   
+
 
                         <li class="active-pro">
                             <a href="http://www.uespi.br/site/" target="_blank" class="simple-text">
@@ -99,8 +113,14 @@
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
-                                    <a href="">
-                                        Conta
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="formEditarProfessor.php">
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">
@@ -123,16 +143,16 @@
                                         <h4 class="title">Devolução</h4>
                                     </div>
 
-                                        <div class="content">
+                                    <div class="content">
                                         <form >
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <div class="form-group">
-                                                    
+
                                                         <label>Matrícula</label>
                                                         <input type="text" id="matricula" name="nome" class="form-control" required autofocus></br>
 
-                                                      
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -146,54 +166,54 @@
                                         <p id="msg"></p>
 
 
-                                               <script>
-                                                    function dhk() {
+                                        <script>
+                                            function dhk() {
 
-                                                        var matricula=document.getElementById('matricula').value;
-                                                        var dataString='matricula='+ matricula;
+                                                var matricula = document.getElementById('matricula').value;
+                                                var dataString = 'matricula=' + matricula;
 
-                                                        $.ajax({
-                                                            type:"post",
-                                                            url: "teste.php",
-                                                            data:dataString,
-                                                            cache: false,
-                                                            success: function(html){
+                                                $.ajax({
+                                                    type: "post",
+                                                    url: "teste.php",
+                                                    data: dataString,
+                                                    cache: false,
+                                                    success: function (html) {
 
 
-                                                                var tabela="";
-                                                                $('#msg').html(html);
-                                                            }
-
-                                                        });
-
-                                                        return false;
+                                                        var tabela = "";
+                                                        $('#msg').html(html);
                                                     }
-                                                </script>
-                                                <br>
-                                                <br>
 
-                                          <!--  <form method="post" action="devolucaoLab.php">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <div class="form-group">
+                                                });
+
+                                                return false;
+                                            }
+                                        </script>
+                                        <br>
+                                        <br>
+
+                                        <!--  <form method="post" action="devolucaoLab.php">
+                                          <div class="row">
+                                              <div class="col-md-5">
+                                                  <div class="form-group">
+                                                  
+                                                      <label>Código</label>
+                                                      <input type="text" id="codigo" name="codigo" class="form-control" required autofocus></br>
+
                                                     
-                                                        <label>Código</label>
-                                                        <input type="text" id="codigo" name="codigo" class="form-control" required autofocus></br>
+                                                  </div>
+                                              </div>
+                                          </div>
 
-                                                      
-                                                    </div>
-                                                </div>
-                                            </div>
+                                          <button class="btn btn-info btn-fill pull-right" type="submit" value="submit"  >Devolver</button>
 
-                                            <button class="btn btn-info btn-fill pull-right" type="submit" value="submit"  >Devolver</button>
-
-                                            <div class="clearfix"></div>
-                                        </form>
-                                     -->
+                                          <div class="clearfix"></div>
+                                      </form>
+                                        -->
 
                                     </div>
-                                    
-                                        
+
+
                                 </div>
                             </div>
                         </div>

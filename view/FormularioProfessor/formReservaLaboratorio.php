@@ -85,7 +85,7 @@ if (!isset($_SESSION['Matricula'])) {
                             </a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="formHistoricoEquipamento.php">
                                 <i class="pe-7s-note2"></i>
                                 <p>Histórico de Reserva</p>
                             </a>

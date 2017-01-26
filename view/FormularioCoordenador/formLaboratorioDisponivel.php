@@ -172,10 +172,12 @@ if (!isset($_SESSION['Matricula'])) {
 
                                     </div>
                                     <div class="content">
-                                        <form class="form-signin" id="formulario" action= "../../controller/LaboratorioProfessorController.php" method="post">
+                                        <form class="form-signin" id="formulario" action= "../../controller/LaboratorioCoordenadorController.php" method="post">
                                             <?php
                                             $DataEmp = $_POST['data'];
                                             $HoraEmp = $_POST['hora'];
+
+                                            
 
                                             $host = "localhost";
                                             $user = "root";
@@ -257,6 +259,7 @@ if (!isset($_SESSION['Matricula'])) {
                                                             echo '<td>' . $row['nome'] . '</td>';
                                                             echo '<td>' . $row['setor'] . '</td>';
                                                             echo '<td>' . $row['sala'] . '</td>';
+                                                             echo '<td> <button value=' .$row['codLab']. ' name="CodLaboratorio" type="submit" >Reservar</button> </td>';
                                                             echo '</tr>';
                                                             //echo '</tbody></table>';
                                                         }
@@ -270,9 +273,7 @@ if (!isset($_SESSION['Matricula'])) {
                                 <input type="hidden" name="hora" value="<?php echo $_POST['hora']; ?>">
                                 <input type="hidden" name="status" value="1" >
                                 <input type="hidden" name="professor" value="<?php echo $_SESSION['Matricula']; ?>" >
-                                <input type="number" id="inputNome" name="CodLaboratorio" value="CodLaboratorio"class="form-control" placeholder="Informe o Código do Laboratório" required  autofocus>
-                                <br>
-                                <button type="submit" class="btn btn-lg btn-primary" >Reservar</button>
+                               
                                 </form><!-- /form -->
                             </div>
 

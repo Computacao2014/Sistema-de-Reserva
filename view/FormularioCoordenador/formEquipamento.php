@@ -58,7 +58,7 @@ if (!isset($_SESSION['Matricula'])) {
                     </div>
 
                     <ul class="nav">
-<li>
+                        <li>
                             <a href="formCoordenador.php">
                                 <i class="pe-7s-graph"></i>
                                 <p>Inicio</p>
@@ -79,7 +79,7 @@ if (!isset($_SESSION['Matricula'])) {
                                 <p>Cadastro De Laboratórios</p>
                             </a>
                         </li>
-                            <li>
+                        <li>
                             <a href="formExcluirProfessor.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Excluir Professor</p>
@@ -97,6 +97,12 @@ if (!isset($_SESSION['Matricula'])) {
                             <a href="formReservaLaboratorio.php">
                                 <i class="pe-7s-culture"></i>
                                 <p>Reservar Laboratórios</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="formHistoricoEquipamento.php">
+                                <i class="pe-7s-note2"></i>
+                                <p>Histórico de Reserva</p>
                             </a>
                         </li>
 
@@ -138,8 +144,14 @@ if (!isset($_SESSION['Matricula'])) {
                             <ul class="nav navbar-nav navbar-right">
 
                                 <li>
-                                    <a href="">
-                                        Account
+                                    <a href="formEditarProfessor.php">
+                                        <?php echo "" . $_SESSION['Nome']; ?>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="formEditarProfessor.php">
+                                        Editar Conta
                                     </a>
                                 </li>
                                 <li class="dropdown">
@@ -185,7 +197,7 @@ if (!isset($_SESSION['Matricula'])) {
                                                         <label>Cor</label>
                                                         <input type="text" id="inputCor" name="cor" class="form-control" required><br>
 
-                                                         <input type="hidden" name="coordenacao" value="<?php echo $_SESSION['Codigo']; ?>" >
+                                                        <input type="hidden" name="coordenacao" value="<?php echo $_SESSION['Codigo']; ?>" >
 
                                                     </div>
                                                 </div>

@@ -35,7 +35,7 @@ $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
  
  }else{
     $query = "DELETE FROM PROFESSOR WHERE codProf = $codProf ";
-    $sql = mysqli_query($conexao, $query);
+    $sql = mysqli_query($conexao, $query)or die(mysqli_error($conexao));
     if($sql){
       echo "<script>alert('$codProf deletado com sucesso');document.location='../view/FormularioCoordenador/formExcluirProfessor.php'</script>";
 

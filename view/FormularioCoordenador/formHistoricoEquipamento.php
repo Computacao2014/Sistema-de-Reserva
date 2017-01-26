@@ -8,9 +8,9 @@ if (!isset($_SESSION))
 
 // Verifica se não há a variável da sessão que identifica o usuário
 if (!isset($_SESSION['Matricula'])) {
-    // Destrói a sessão por segurança
+// Destrói a sessão por segurança
     session_destroy();
-    // Redireciona o visitante de volta pro login
+// Redireciona o visitante de volta pro login
     echo "<script>alert('Registro Não Autenticado!');document.location='../../pagina1.php'</script>";
     exit;
 }
@@ -88,7 +88,7 @@ if (!isset($_SESSION['Matricula'])) {
                             </a>
                         </li>
                         <li>
-                            <a href="table.html">
+                            <a href="formHistoricoEquipamento.php">
                                 <i class="pe-7s-note2"></i>
                                 <p>Histórico de Reserva</p>
                             </a>
@@ -160,80 +160,19 @@ if (!isset($_SESSION['Matricula'])) {
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="header">
-                                        <h4 class="title">EQUIPAMENTOS DISPONÍVEIS</h4>
+                                        <h4 class="title">HISTÓRICO DE EQUIPAMENTOS</h4>
 
 
                                     </div>
                                     <div class="content">
                                         <form class="form-signin" id="formulario" action= "../../controller/EquipamentoProfessorController.php" method="post">
                                             <?php
-                                            $DataEmp = $_POST['data'];
-                                            $HoraEmp = $_POST['hora'];
-
                                             $host = "localhost";
                                             $user = "root";
                                             $pass = "";
                                             $banco = "BANCORESERVA";
 
                                             $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
-					                        function ultimoCodigo($conexao){
-                                              $ultimo = "select codEquip from EQUIPAMENTO where codEquip = (SELECT MAX(codEquip) FROM EQUIPAMENTO)";
-                                                $resultadoCod = mysqli_query($conexao, $ultimo);
-						
-
-                                                $ultimoCod = array();
-
-                                                while ($atual = mysqli_fetch_assoc($resultadoCod)) {
-                                                    #var_dump($atual);
-                                                    array_push($ultimoCod, $atual);
-                                                }
-                                                return $ultimoCod;
-                                            }
-                       
-                                            $teste = ultimoCodigo($conexao);
-					                        $cont1 = count($teste);
-                                             for ($i = 0; $i < $cont1; $i++) {
-                                                
-                                               //echo "olá "+$teste[$i]['codEquip'];
-                                            }
-                                           
-                                            
-
-                                            function buscaEquipamento($conexao) {
-
-                                                $query1 = "select codEquip from EQUIP_PROF where dataEmp = '" . $_POST['data'] . "' AND horaEmp = '" . $_POST['hora'] . "' ";
-                                                $resultado1 = mysqli_query($conexao, $query1);
-						
-                                                $equipamento = array();
-
-                                                while ($atual = mysqli_fetch_assoc($resultado1)) {
-                                                    #var_dump($atual);
-                                                    array_push($equipamento, $atual);
-                                                }
-                                                return $equipamento;
-                                            }
-
-                                            $equipamento = buscaEquipamento($conexao);
-                                            $final = array();
-
-                                            if (count($equipamento) > 0) {
-                                                for ($i = 0; $i < count($equipamento); $i++) {
-
-                                                    array_push($final, $equipamento[$i]['codEquip']);
-                                                }
-                                            }
-
-                                            error_reporting(E_ERROR | E_PARSE);
-                                            $cont = count($equipamento);
-                                            for ($i = 0; $i < $cont; $i++) {
-                                                if ($i < $cont - 1) {
-
-                                                    $camposQuery .= $equipamento[$i]['codEquip'] . " AND c.codEquip != ";
-                                                } else {
-
-                                                    $camposQuery .= $equipamento[$i]['codEquip'];
-                                                }
-                                            }
                                             ?>
 
 
@@ -244,7 +183,8 @@ if (!isset($_SESSION['Matricula'])) {
                                                         <th>Nome</th>
                                                         <th>Modelo</th>
                                                         <th>Marca</th>
-                                                        <th>Data de Aquisiçao</th>
+                                                        <th>Hora de Emprestimo</th>
+                                                        <th>Data de Emprestimo</th>
 
                                                     </tr>
                                                 </thead>
@@ -255,12 +195,10 @@ if (!isset($_SESSION['Matricula'])) {
                                                         <?php
                                                         error_reporting(E_ERROR | E_PARSE);
                                                         $coordenacaoP = $_SESSION['Codigo'];
-                                                        if ($final != NULL) {
 
-                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE c.codEquip != $camposQuery AND s.codCoord = $coordenacaoP)";
-                                                        } else {
-                                                            $query = "SELECT * FROM EQUIPAMENTO as s WHERE s.codEquip IN (SELECT DISTINCT c.codEquip FROM EQUIP_PROF as c WHERE s.codCoord = $coordenacaoP)";
-                                                        }
+
+                                                        $query = "SELECT EQUIPAMENTO.codEquip, nome, modelo, marca, EQUIP_PROF.horaEmp, EQUIP_PROF.dataEmp FROM EQUIPAMENTO JOIN EQUIP_PROF ON EQUIPAMENTO.codEquip=EQUIP_PROF.codEquip WHERE EQUIP_PROF.codProf = '" . $_SESSION['Matricula'] . "'";
+
 
                                                         $resultado = mysqli_query($conexao, $query);
 
@@ -273,21 +211,109 @@ if (!isset($_SESSION['Matricula'])) {
                                                             echo '<td>' . $row['nome'] . '</td>';
                                                             echo '<td>' . $row['marca'] . '</td>';
                                                             echo '<td>' . $row['modelo'] . '</td>';
-                                                            echo '<td>' . $row['dataAquisicao'] . '</td>';
-                                                            echo '<td> <button value=' .$row['codEquip']. ' name="CodEquipamento" type="submit" >Reservar</button> </td>';
+                                                            switch ($row['horaEmp']) {
+                                                                case 1:
+                                                                    echo '<td>08:00h às 10:00h</td>';
+                                                                    break;
+                                                                case 2:
+                                                                    echo '<td>10:00h às 12:00h</td>';
+                                                                    break;
+                                                                case 3:
+                                                                    echo '<td>14:00h às 16:00h</td>';
+                                                                    break;
+                                                                case 4:
+                                                                    echo '<td>16:00h às 18:00h</td>';
+                                                                    break;
+                                                                case 5:
+                                                                    echo '<td>18:00h às 20:00h</td>';
+                                                                    break;
+                                                                case 6:
+                                                                    echo '<td>20:00h às 22:00h</td>';
+                                                                    break;
+                                                            }
+                                                            //echo '<td>' . $row['horaEmp'] . '</td>';
+                                                            echo '<td>' . $row['dataEmp'] . '</td>';
                                                             echo '</tr>';
-                                                            //echo '</tbody></table>';
+//echo '</tbody></table>';
                                                         }
                                                         ?>
                                                 </tbody>
                                             </table>
+                                            <br><br>
+
+                                            <h4 class="title">HISTÓRICO DE LABORATÓRIO</h4>
+
+
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Código</th>
+                                                        <th>Nome</th>
+                                                        <th>Setor</th>
+                                                        <th>Sala</th>
+                                                        <th>Hora de Emprestimo</th>
+                                                        <th>Data de Emprestimo</th>
+
+                                                    </tr>
+                                                </thead>
+
+                                                <tbody>
+
+                                                    <tr>
+                                                        <?php
+                                                        error_reporting(E_ERROR | E_PARSE);
+                                                        $coordenacaoP = $_SESSION['Codigo'];
+
+
+                                                        $query2 = "SELECT LABORATORIO.codLab, LABORATORIO.nome, setor, sala, LAB_PROF.horaEmp, LAB_PROF.dataEmp FROM LABORATORIO JOIN LAB_PROF ON LABORATORIO.codLab=LAB_PROF.codLab WHERE LAB_PROF.codProf = '" . $_SESSION['Matricula'] . "'";
+
+
+                                                        $resultado2 = mysqli_query($conexao, $query2);
+
+
+                                                        while ($row = mysqli_fetch_assoc($resultado2)) {
+                                                            error_reporting(E_ERROR | E_PARSE);
+
+
+                                                            echo '<td>' . $row['codLab'] . '</td>';
+                                                            echo '<td>' . $row['nome'] . '</td>';
+                                                            echo '<td>' . $row['setor'] . '</td>';
+                                                            echo '<td>' . $row['sala'] . '</td>';
+                                                            switch ($row['horaEmp']) {
+                                                                case 1:
+                                                                    echo '<td>08:00h às 10:00h</td>';
+                                                                    break;
+                                                                case 2:
+                                                                    echo '<td>10:00h às 12:00h</td>';
+                                                                    break;
+                                                                case 3:
+                                                                    echo '<td>14:00h às 16:00h</td>';
+                                                                    break;
+                                                                case 4:
+                                                                    echo '<td>16:00h às 18:00h</td>';
+                                                                    break;
+                                                                case 5:
+                                                                    echo '<td>18:00h às 20:00h</td>';
+                                                                    break;
+                                                                case 6:
+                                                                    echo '<td>20:00h às 22:00h</td>';
+                                                                    break;
+                                                            }
+                                                            //echo '<td>' . $row['horaEmp'] . '</td>';
+                                                            echo '<td>' . $row['dataEmp'] . '</td>';
+                                                            echo '</tr>';
+//echo '</tbody></table>';
+                                                        }
+                                                        ?>
+                                                </tbody>
+                                            </table>
+
+
+
+
                                     </div>
                                 </div>
 
-                                <input type="hidden" name="data" value="<?php echo $_POST['data']; ?>">
-                                <input type="hidden" name="hora" value="<?php echo $_POST['hora']; ?>">
-                                <input type="hidden" name="status" value="1" >
-                                <input type="hidden" name="professor" value="<?php echo $_SESSION['Matricula']; ?>" >
                                 </form><!-- /form -->
                             </div>
 

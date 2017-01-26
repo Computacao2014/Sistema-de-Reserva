@@ -30,7 +30,7 @@ class LaboratorioProfessorController {
              
         
         echo "<script>alert('Laboratório Reservado Com Sucesso!');document.location=''</script>";
-        header("Location: ../view/FormularioProfessor/formLaboratorioDisponivel.php", TRUE, 307);
+        header("Location: ../view/FormularioCoordenador/formLaboratorioDisponivel.php", TRUE, 307);
     }
 
 }
