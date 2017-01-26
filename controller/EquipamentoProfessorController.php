@@ -33,8 +33,24 @@ class EquipamentoProfessorController {
         //} else {
         //echo "<script>alert('Erro ao gravar registro!');history.back()</script>";
         //}
-        echo "<script>alert('Equipamento Reservado Com Sucesso!');document.location='../view/FormularioProfessor/formProfessorInicio.php'</script>";
-    }
+        
+        echo  "<link href='.assets/css/demo.css.' rel='.stylesheet.'/>";
+        echo  "<button onclick='.demo.showNotification('top','left').' >Top Left</button>";
+      
+
+        //echo "<script>alert('Equipamento Reservado Com Sucesso!');document.location='../view/FormularioCoordenador/formReservaEquipamento.php'</script>";
+
+
+
+
+
+
+      }      
+
+
+
+       
+    
 
 }
 

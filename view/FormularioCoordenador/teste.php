@@ -15,31 +15,31 @@
     $resultado = mysqli_query($conexao, $query);
     $reserva = array();
 
-	    while ($atual = mysqli_fetch_assoc($resultado)) {
-	   		  array_push($reserva,$atual);
-	    }
+        while ($atual = mysqli_fetch_assoc($resultado)) {
+              array_push($reserva,$atual);
+        }
 
-	    return $reserva;
-	}
+        return $reserva;
+    }
 
-	function buscaLaboratorio($conexao, $codigoLaboratorio){
+    function buscaLaboratorio($conexao, $codigoLaboratorio){
 
     $query = "select codLab , nome from LABORATORIO where codLab = '".$codigoLaboratorio."'";
     $resultado = mysqli_query($conexao, $query);
     $laboratorio = array();
 
-	    while ($atual = mysqli_fetch_assoc($resultado)) {
-	   		  array_push($laboratorio,$atual);
-	    }
+        while ($atual = mysqli_fetch_assoc($resultado)) {
+              array_push($laboratorio,$atual);
+        }
 
-	    return $laboratorio;
-	}
-	 
-	 
+        return $laboratorio;
+    }
+     
+     
     $reserva = buscaReserva($conexao);
     $json= array();
 
-	$tabela = '<table class="table">';//abre table
+    $tabela = '<table class="table">';//abre table
     $tabela .='<thead>';//abre cabeçalho
     $tabela .= '<tr>';//abre uma linha
     $tabela .= '<th>Código</th>';
@@ -51,23 +51,23 @@
     $tabela .='<tbody>';//abre corpo da tabela*/
     foreach ($reserva as $reser) : 
     $tabela .= '<tr>'; // abre uma linha
-	    
-	    $laboratorio = buscaLaboratorio($conexao, $reser['codLab']);	
-		foreach ($laboratorio as $labora) :
-		//$json += json_encode($labora);
-		array_push($json,$labora);	 
-		$tabela .= '<td>'.$labora['codLab'].'</td>';	
-   		$tabela .= '<td>'.$labora['nome'].'</td>'; //coluna numero
+        
+        $laboratorio = buscaLaboratorio($conexao, $reser['codLab']);    
+        foreach ($laboratorio as $labora) :
+        //$json += json_encode($labora);
+        array_push($json,$labora);   
+        $tabela .= '<td>'.$labora['codLab'].'</td>';    
+        $tabela .= '<td>'.$labora['nome'].'</td>'; //coluna numero
        
-   		endforeach;		
-   		$retorno = json_encode($json);
+        endforeach;     
+        $retorno = json_encode($json);
 
     $tabela .= '<td>'.$reser['dataEmp'].'</td>'; // coluna validade
     $tabela .= '</tr>';
     // echo "Resposta: ".$reser['codLab'] . " " . $reser['dataEmp']; 
-    endforeach;		
+    endforeach;     
     echo $tabela; 
-  // 	echo $retorno;
+  //    echo $retorno;
 
 
 

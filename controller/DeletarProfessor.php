@@ -44,14 +44,5 @@ $conexao = mysqli_connect($host, $user, $pass, $banco) or die(mysqli_error());
     echo "<script>alert('Erro ao excluir!);document.location='../view/FormularioCoordenador/formExcluirProfessor.php'</script>";
 
  }
-    
-
-
- }
-
- 
-
- 
-
-
+}
 ?>

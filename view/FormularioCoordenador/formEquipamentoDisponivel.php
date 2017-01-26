@@ -278,18 +278,19 @@ if (!isset($_SESSION['Matricula'])) {
 
                                                         $resultado = mysqli_query($conexao, $query);
 
-
                                                         while ($row = mysqli_fetch_assoc($resultado)) {
                                                             error_reporting(E_ERROR | E_PARSE);
 
 
-                                                            echo '<td>' . $row['codEquip'] . '</td>';
+                                                            echo '<td>' . $row['codEquip'] . '</td> ';
                                                             echo '<td>' . $row['nome'] . '</td>';
                                                             echo '<td>' . $row['marca'] . '</td>';
                                                             echo '<td>' . $row['modelo'] . '</td>';
                                                             echo '<td>' . $row['dataAquisicao'] . '</td>';
-                                                            echo '</tr>';
+                                                            echo '<td> <button value=' .$row['codEquip']. ' name="CodEquipamento" type="submit" >Reservar</button> </td>';
+                                                            echo '</tr> ';
                                                             //echo '</tbody></table>';
+
                                                         }
                                                         ?>
                                                 </tbody>
@@ -301,10 +302,10 @@ if (!isset($_SESSION['Matricula'])) {
                                 <input type="hidden" name="hora" value="<?php echo $_POST['hora']; ?>">
                                 <input type="hidden" name="status" value="1" >
                                 <input type="hidden" name="professor" value="<?php echo $_SESSION['Matricula']; ?>" >
-                                <input type="number" id="inputNome" name="CodEquipamento" value="CodEquipamento"class="form-control" placeholder="Informe o Código do Equipamento" required  autofocus>
+                               <!-- <input type="number" id="inputNome" name="CodEquipamento" value="CodEquipamento"class="form-control" placeholder="Informe o Código do Equipamento" required  autofocus>
                                 <br>
-                                <button type="submit" class="btn btn-lg btn-primary" >Reservar</button>
-                                </form><!-- /form -->
+                                <button type="submit" class="btn btn-lg btn-primary" >Reservar</button> -->
+                                </form>
                             </div>
 
                         </div>
