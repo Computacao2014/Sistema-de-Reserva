@@ -44,7 +44,7 @@ class Laboratorio extends Banco {
 
     function incluirLaboratorio() {
         $this->tabela = "LABORATORIO";
-        $this->campos = array("nome", "setor", "sala", "codCoord");
+        $this->campos = array("nomeLab", "setor", "sala", "codCoord");
         $this->valores = array($this->getNome(), $this->getSetor(), $this->getSala(), $this->getCoordenacao());
         $result = $this->inserirRegistro();
 

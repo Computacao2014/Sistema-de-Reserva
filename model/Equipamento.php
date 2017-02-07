@@ -71,7 +71,7 @@ class Equipamento extends Banco {
 
     function incluirEquip() {
         $this->tabela = "EQUIPAMENTO";
-        $this->campos = array("nome", "tombo", "dataAquisicao", "modelo", "marca", "cor", "codCoord");
+        $this->campos = array("nomeEquip", "tombo", "dataAquisicao", "modelo", "marca", "cor", "codCoord");
         $this->valores = array($this->getNome(), $this->getTombo(), $this->getData(), $this->getModelo(), $this->getMarca(), $this->getCor(), $this->getCoordenacao());
         $result = $this->inserirRegistro();
 

@@ -305,7 +305,7 @@ if (!isset($_SESSION['Matricula'])) {
                                <!-- <input type="number" id="inputNome" name="CodEquipamento" value="CodEquipamento"class="form-control" placeholder="Informe o Código do Equipamento" required  autofocus>
                                 <br>
                                 <button type="submit" class="btn btn-lg btn-primary" >Reservar</button> -->
-                                </form>
+                              </form>
                             </div>
 
                         </div>

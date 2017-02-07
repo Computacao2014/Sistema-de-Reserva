@@ -70,7 +70,7 @@ class Professor extends Banco {
 
     function incluir() {
         $this->tabela = "PROFESSOR";
-        $this->campos = array("codProf", "nome", "endereco", "telefone", "email", "senha", "codCoord");
+        $this->campos = array("codProf", "nomeProf", "endereco", "telefone", "email", "senha", "codCoord");
         $this->valores = array($this->getCodProf(), $this->getNome(), $this->getEndereco(), $this->getTelefone(), $this->getEmail(), $this->getSenha(), $this->getCoordenacao());
         $result = $this->inserirRegistro();
 
